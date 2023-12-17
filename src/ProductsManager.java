@@ -105,8 +105,6 @@ public class ProductsManager {
 
             printAllProducts();
 
-            // Записываем данные обратно в файлы
-
             writeProductToFile(nameWriter, productName);
             writeProductToFile(priceWriter, Double.toString(productPrice));
             writeProductToFile(ratingWriter, Integer.toString((int) productRating));
