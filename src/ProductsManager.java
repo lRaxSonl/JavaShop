@@ -3,12 +3,14 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import entity.Customer;
 import entity.Product;
 
 public class ProductsManager {
-    private static final File productsName = new File("src/data/product_name.txt");
-    private static final File productsPrice = new File("src/data/product_price.txt");
-    private static final File productsRating = new File("src/data/product_rating.txt");
+    private static final File productsName = new File("src/data/product/product_name.txt");
+    private static final File productsPrice = new File("src/data/product/product_price.txt");
+    private static final File productsRating = new File("src/data/product/product_rating.txt");
     private static final Scanner sc = new Scanner(System.in);
 
     //Возращаем список продуктов
@@ -91,9 +93,9 @@ public class ProductsManager {
 
             // Рейтинг
             System.out.print("Введите рейтинг товара: ");
-            double productRating;
+            int productRating;
             try {
-                productRating = sc.nextDouble();
+                productRating = sc.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Ошибка ввода. Введите рейтинг корректно");
                 return;
@@ -105,6 +107,7 @@ public class ProductsManager {
 
             printAllProducts();
 
+
             writeProductToFile(nameWriter, productName);
             writeProductToFile(priceWriter, Double.toString(productPrice));
             writeProductToFile(ratingWriter, Integer.toString((int) productRating));
@@ -115,5 +118,31 @@ public class ProductsManager {
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    public void updateRating(Product product) {
+        int newRating = product.getRating() + 1;
+        List<Product> productsArr = getProducts();
+
+        for (int i = 0; i < productsArr.size(); i++) {
+            if (product.getName().equals(productsArr.get(i).getName())) {
+                productsArr.get(i).setRating(newRating);
+            }
+        }
+
+        try (BufferedWriter nameWriter = new BufferedWriter(new FileWriter(productsName));
+             BufferedWriter priceWriter = new BufferedWriter(new FileWriter(productsPrice));
+             BufferedWriter ratingWriter = new BufferedWriter(new FileWriter(productsRating))) {
+
+            for (Product existingProduct : productsArr) {
+                writeProductToFile(nameWriter, existingProduct.getName());
+                writeProductToFile(priceWriter, Double.toString(existingProduct.getPrice()));
+                writeProductToFile(ratingWriter, Integer.toString(existingProduct.getRating()));
+            }
+
+        } catch (IOException e) {
+            System.out.println("Ошибка при обновлении рейтинга в файле: " + e.getMessage());
+        }
+
     }
 }
