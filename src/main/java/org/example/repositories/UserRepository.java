@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.Singleton;
 import org.example.models.User;
+import org.example.models.UserRole;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class UserRepository {
 
-    EntityManager em = Singleton.getConnection();
+    private final static EntityManager em = Singleton.getConnection();
 
     public List<User> findAll() {
         return em.createQuery("SELECT u FROM User u", User.class).getResultList();
@@ -34,6 +35,10 @@ public class UserRepository {
     public void save(User user) {
         EntityTransaction transaction = em.getTransaction();
 
+        if (user == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+
         try {
             transaction.begin();
             em.persist(user);
@@ -45,6 +50,7 @@ public class UserRepository {
             e.printStackTrace();
         }
     }
+
 
 
 }

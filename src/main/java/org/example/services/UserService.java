@@ -2,7 +2,9 @@ package org.example.services;
 
 
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.example.App;
 import org.example.models.User;
+import org.example.models.UserRole;
 import org.example.repositories.UserRepository;
 
 import java.util.List;
@@ -53,7 +55,7 @@ public class UserService {
 
         userPassword = hashPassword(userPassword);
 
-        User user = new User(usernameInput, userPassword, 0.0);
+        User user = new User(usernameInput, userPassword, UserRole.USER, 0.0);
 
         userRepository.save(user);
     }
@@ -93,6 +95,24 @@ public class UserService {
         return null;
     }
 
+    public void showAllUsers(User inputUser) {
+        if(isAdmin(inputUser)) {
+            List<User> allUsers = userRepository.findAll();
+            for (User user : allUsers) {
+                System.out.println("Username: " + user.getUsername() + ", Role: " + user.getRole() +
+                        ", Balance: " + user.getBalance());
+            }
+        }else {
+            System.out.println("У вас нет прав на эту команду");
+        }
+    }
+
+    public void createAdmin() {
+        if(!isUsernameAlreadyExists("Admin")) {
+            userRepository.save(new User("Admin", "pass", UserRole.ADMINISTRATOR, 5000.0));
+        }
+    }
+
     private boolean isUsernameAlreadyExists(String usernameInput) {
         List<User> allUsers = userRepository.findAll();
         for (User user : allUsers) {
@@ -111,5 +131,22 @@ public class UserService {
     //Вернёт true если пароли совпадают
     private boolean isCorrectPassword(String inputPassword, String hashedPassword) {
         return new Sha256Hash(inputPassword).toBase64().equals(hashedPassword);
+    }
+
+
+    public boolean isAdmin(User user) {
+        if(user.getRole().equals(UserRole.ADMINISTRATOR)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean isManager(User user) {
+        if(user.getRole().equals(UserRole.MANAGER)) {
+            return true;
+        }else {
+            return false;
+        }
     }
 }
