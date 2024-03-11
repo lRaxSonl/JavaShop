@@ -52,5 +52,44 @@ public class UserRepository {
     }
 
 
+    public void updateUserRole(User user, UserRole newRole) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            if (user != null) {
+                user.setRole(newRole);
+                em.merge(user);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUserBalance(User user, Double newBalance) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            if (user != null) {
+                user.setBalance(newBalance);
+                em.merge(user);
+            }
+
+            transaction.commit();
+        }catch (Exception e) {
+            if(transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 
 }

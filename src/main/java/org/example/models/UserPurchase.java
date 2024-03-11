@@ -1,12 +1,10 @@
 package org.example.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
@@ -23,4 +21,9 @@ public class UserPurchase {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    public UserPurchase(User user, Product product) {
+        this.user = user;
+        this.product = product;
+    }
 }

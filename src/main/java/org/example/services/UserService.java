@@ -99,7 +99,7 @@ public class UserService {
         if(isAdmin(inputUser)) {
             List<User> allUsers = userRepository.findAll();
             for (User user : allUsers) {
-                System.out.println("Username: " + user.getUsername() + ", Role: " + user.getRole() +
+                System.out.println("\nUsername: " + user.getUsername() + ", Role: " + user.getRole() +
                         ", Balance: " + user.getBalance());
             }
         }else {
@@ -107,9 +107,62 @@ public class UserService {
         }
     }
 
+    public void addNewManager(User user) {
+        if(isAdmin(user)) {
+            showAllUsers(user);
+            System.out.print("\nВведите имя пользователя чтобы добавить менеджера: ");
+            String newManagerUsername = sc.nextLine();
+
+            if(isUsernameAlreadyExists(newManagerUsername)) {
+                User newManager = userRepository.findByUsername(newManagerUsername);
+                userRepository.updateUserRole(newManager, UserRole.MANAGER);
+            }else {
+                System.out.println("Пользователь не найден\n\n");
+                return;
+            }
+        }else {
+            System.out.println("У вас нет доступа к этой команде.");
+        }
+    }
+
+    public void removeManager(User user) {
+        if(isAdmin(user)) {
+            showAllUsers(user);
+            System.out.println("\nВведите имя пользователя чтобы удалить менеджера: ");
+            String managerUsername = sc.nextLine();
+
+            if(isUsernameAlreadyExists(managerUsername)) {
+                User manager = userRepository.findByUsername(managerUsername);
+                userRepository.updateUserRole(manager, UserRole.USER);
+            }else {
+                System.out.println("Пользователь не найден\n\n");
+                return;
+            }
+        }else {
+            System.out.println("У вас нет доступа к этой команде.");
+        }
+    }
+
+    public void balanceDeposit(User user) {
+        System.out.print("Введите сумму пополнения баланса: ");
+        double deposit =  sc.nextDouble();
+
+        double newBalance = user.getBalance() + deposit;
+        userRepository.updateUserBalance(user, newBalance);
+
+        System.out.println("\nДепозит зачислен.\n");
+    }
+
+    public void viewProfil(User user) {
+        System.out.println("\nИмя пользователя: " + user.getUsername() + ", Роль: " + user.getRole() +
+                ", Баланс: " + user.getBalance());
+
+        System.out.println("Купленные продукты: ");
+    }
+
     public void createAdmin() {
         if(!isUsernameAlreadyExists("Admin")) {
-            userRepository.save(new User("Admin", "pass", UserRole.ADMINISTRATOR, 5000.0));
+            userRepository.save(new User("Admin", hashPassword("pass"), UserRole.ADMINISTRATOR, 5000.0));
         }
     }
 

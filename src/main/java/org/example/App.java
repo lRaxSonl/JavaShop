@@ -2,7 +2,8 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import org.example.models.User;
-import org.example.services.ProductsService;
+import org.example.services.ProductService;
+import org.example.services.UserPurchaseService;
 import org.example.services.UserService;
 
 import java.util.InputMismatchException;
@@ -18,7 +19,8 @@ import java.util.Scanner;
 public class App {
     private static final Scanner sc = new Scanner(System.in);
     private static final UserService userService = new UserService();
-    private static final ProductsService productService = new ProductsService();
+    private static final ProductService productService = new ProductService();
+    private static final UserPurchaseService userPurchaseService = new UserPurchaseService();
     private static User user;
 
 
@@ -33,6 +35,9 @@ public class App {
     private static final int VIEW_CUSTOMERS_OPTION = 3;
     private static final int BUY_PRODUCT_OPTION = 4;
     private static final int EDIT_CUSTOMER_OPTION = 5;
+    private static final int ADD_NEW_MANAGER_OPTION = 6;
+    private static final int REMOVE_MANAGER_OPTION = 7;
+    private static final int DEPOSIT_OPTION = 8;
 
     public static void run() {
         EntityManager em = Singleton.getConnection();
@@ -47,7 +52,8 @@ public class App {
                     System.out.print("Выход из программы - 0\nПосмотреть товары - 1\n" +
                             "Добавить товар - 2\nПосмотреть зарегистрированных покупателей - 3" +
                             "\nКупить товар - 4\n" +
-                            "Редактировать покупателя - 5\n\nВыберете пункт из списка: ");
+                            "Редактировать покупателя - 5\nДобавить менеджера - 6\n" +
+                            "\nПополнить баланс - 8\nВыберете пункт из списка: ");
 
                     int usr = sc.nextInt();
                     sc.nextLine();
@@ -55,12 +61,11 @@ public class App {
                     switch (usr) {
                         case EXIT_OPTION:
                             isWorking = false;
-                            em.close();
                             System.out.println();
                             break;
 
                         case VIEW_PRODUCTS_OPTION:
-                            //Code here
+                            productService.viewAllProducts();
                             break;
 
                         case ADD_PRODUCT_OPTION:
@@ -74,14 +79,17 @@ public class App {
 
                         case VIEW_CUSTOMERS_OPTION:
                             userService.showAllUsers(user);
-                            //Code here
                             break;
 
 
                         case BUY_PRODUCT_OPTION:
                             System.out.println("Вы уверены что хотите купить продукты? (1 - Да, 0 - Нет):");
-                            //Code here
-                            break;
+                            if (sc.nextInt() != 0) {
+                                userPurchaseService.buyProduct(user);
+                                break;
+                            }else {
+                                break;
+                            }
 
 
                         case EDIT_CUSTOMER_OPTION:
@@ -89,6 +97,29 @@ public class App {
                             //Code here
                             break;
 
+                        case ADD_NEW_MANAGER_OPTION:
+                            System.out.println("Вы уверены что хотите добавить менэджера? (1 - Да, 0 - Нет): ");
+                            if (sc.nextInt() != 0) {
+                                userService.addNewManager(user);
+                            }else {
+                                break;
+                            }
+
+                        case REMOVE_MANAGER_OPTION:
+                            System.out.println("Вы уверены что хотите удалить менэджера? (1 - Да, 0 - Нет): ");
+                            if (sc.nextInt() != 0) {
+                                userService.removeManager(user);
+                            }else {
+                                break;
+                            }
+
+                        case DEPOSIT_OPTION:
+                            System.out.println("Вы уверены что хотите пополнить баланс? (1 - Да, 0 - Нет): ");
+                            if (sc.nextInt() != 0) {
+                                userService.balanceDeposit(user);
+                            }else {
+                                break;
+                            }
 
                         default:
                             System.out.println("\nВыбран некоректный пункт\n\n");
@@ -110,41 +141,54 @@ public class App {
     private static boolean loginProcess(EntityManager em) {
         boolean islogin_process = true;
         boolean isWorking = false;
-        do {
-            System.out.print("Выход из программы - 0" +
-                    "\nВойти в аккаунт - 1\nЗарегистрироватся как покупатель - 2\n" +
-                    "\nВыберете пункт из списка: ");
-            int usr = sc.nextInt();
-            sc.nextLine();
 
-            switch (usr) {
-                case EXIT_OPTION:
-                    em.close();
-                    System.out.println();
+        try {
 
-                    islogin_process = false;
-                    break;
+            do {
+                System.out.print("Выход из программы - 0" +
+                        "\nВойти в аккаунт - 1\nЗарегистрироватся как покупатель - 2\n" +
+                        "\nВыберете пункт из списка: ");
+                int usr = sc.nextInt();
+                sc.nextLine();
 
+                switch (usr) {
+                    case EXIT_OPTION:
+                        System.out.println();
 
-                case LOGIN_AS_CUSTOMER:
-                    user = userService.userLogin();
-
-                    islogin_process = false;
-                    isWorking = true; //Программа продолжает свою работу
-                    break;
-
-                case ADD_CUSTOMER_OPTION:
-                    userService.addNewUser();
-                    break;
+                        islogin_process = false;
+                        break;
 
 
-                default:
-                    System.out.println("\nВыбран некоректный пункт\n\n");
-            }
+                    case LOGIN_AS_CUSTOMER:
+                        user = userService.userLogin();
+
+                        if (user != null) {
+                            islogin_process = false;
+                            isWorking = true; //Программа продолжает свою работу
+                        } else {
+                            islogin_process = false;
+                            isWorking = false; //Программа заканчивает свою работу
+                        }
+                        break;
+
+                    case ADD_CUSTOMER_OPTION:
+                        userService.addNewUser();
+                        break;
 
 
-        }while (islogin_process);
+                    default:
+                        System.out.println("\nВыбран некоректный пункт\n\n");
+                }
 
+
+            } while (islogin_process);
+
+        } catch (InputMismatchException e) {
+            System.out.println("\nОшибка ввода: " + e);
+
+        } finally {
+            System.out.println("Выход...");
+        }
         return isWorking;
     }
 }

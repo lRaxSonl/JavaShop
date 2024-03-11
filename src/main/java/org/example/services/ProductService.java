@@ -6,9 +6,10 @@ import org.example.models.User;
 import org.example.repositories.ProductRepository;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
-public class ProductsService {
+public class ProductService {
     private final static Scanner sc = new Scanner(System.in);
     private final static ProductRepository productRepository = new ProductRepository();
     private final static UserService userService = new UserService();
@@ -31,10 +32,17 @@ public class ProductsService {
                 System.out.printf("Ошибка ввода: " + e);
             }
 
-
-
+        } else {
+            System.out.println("\nУ вас нет доступа к этой команде.\n");
         }
+    }
 
+    public void viewAllProducts() {
+        List<Product> productsList = productRepository.findAll();
+
+        for(Product product : productsList) {
+            System.out.println("\nProduct name: " + product.getName() + ", Price: " + product.getPrice() + "\n");
+        }
     }
 
 }
