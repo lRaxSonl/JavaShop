@@ -22,8 +22,12 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    public Product(String name, Double price) {
+    @Column(name = "quantity")
+    private int quantity;
+
+    public Product(String name, Double price, int quantity) {
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
     }
 }

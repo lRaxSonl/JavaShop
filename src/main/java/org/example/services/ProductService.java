@@ -5,9 +5,7 @@ import org.example.models.Product;
 import org.example.models.User;
 import org.example.repositories.ProductRepository;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ProductService {
     private final static Scanner sc = new Scanner(System.in);
@@ -23,7 +21,10 @@ public class ProductService {
             try {
                 Double productPrice = sc.nextDouble();
 
-                Product product = new Product(productName, productPrice);
+                System.out.print("\nВведите кол-во продукта: ");
+                int productQuantity = sc.nextInt();
+
+                Product product = new Product(productName, productPrice, productQuantity);
 
                 productRepository.save(product);
 
@@ -41,8 +42,31 @@ public class ProductService {
         List<Product> productsList = productRepository.findAll();
 
         for(Product product : productsList) {
-            System.out.println("\nProduct name: " + product.getName() + ", Price: " + product.getPrice() + "\n");
+            System.out.println("\nProduct name: " + product.getName() + ", Price: " + product.getPrice() + ", Рейтинг: " + productRepository.calculateRating(product) + "\n");
         }
     }
 
+    public void viewAllProductsRating() {
+        Map<Product, Long> productsRating = new HashMap<>();
+        List<Product> productList = productRepository.findAll();
+
+        for (Product product : productList) {
+            Long rating = productRepository.calculateRating(product);
+            productsRating.put(product, rating);
+        }
+
+        //Создаем список записей Map для сортировки по рейтингу
+        List<Map.Entry<Product, Long>> entryList = new ArrayList<>(productsRating.entrySet());
+
+        //Сортируем записи по убыванию рейтинга
+        entryList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        //Выводим отсортированный список продуктов
+        for (Map.Entry<Product, Long> entry : entryList) {
+            Product product = entry.getKey();
+            Long rating = entry.getValue();
+
+            System.out.println("\nПродукт: " + product.getName() + ", Рейтинг: " + rating + "\n");
+        }
+    }
 }

@@ -26,12 +26,19 @@ public class UserPurchaseService {
             Product product = productRepository.findByName(productName);
 
             if(user.getBalance() >= product.getPrice()) {
-                double newBalance = user.getBalance() - product.getPrice(); //Новый баланс
+                if(product.getQuantity() > 0) {
+                    double newBalance = user.getBalance() - product.getPrice(); //Новый баланс
+                    int newQuantity = product.getQuantity() - 1;
 
-                userRepository.updateUserBalance(user, newBalance); //Обналяем баланс в базе данных
-                savePurchase(user, product); //Сохраняем покупку
+                    userRepository.updateUserBalance(user, newBalance); //Обновляем баланс в базе данных
+                    productRepository.updateProductQuantity(product, newQuantity); //Обновляем кол-во товара в базе данных
+                    savePurchase(user, product); //Сохраняем покупку
 
-                System.out.println("Товар успешно куплен.");
+                    System.out.println("Товар успешно куплен.");
+                }else {
+                    System.out.println("Недостаточно товара на складе");
+                    return;
+                }
 
             }else {
                 System.out.println("На балансе недостаточно денег.");

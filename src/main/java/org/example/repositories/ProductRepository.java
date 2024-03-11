@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.Singleton;
 import org.example.models.Product;
+import org.example.models.User;
 
 import java.util.List;
 
@@ -35,6 +36,32 @@ public class ProductRepository {
     public Product findByName(String name) {
         return em.createQuery("SELECT p FROM Product p WHERE p.name = :name", Product.class)
                 .setParameter("name", name)
+                .getSingleResult();
+    }
+
+    public void updateProductQuantity(Product product, int quantity) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            if (product != null) {
+                product.setQuantity(quantity);
+                em.merge(product);
+            }
+
+            transaction.commit();
+        }catch (Exception e) {
+            if(transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public Long calculateRating(Product product) {
+        return em.createQuery("SELECT COUNT(up) FROM UserPurchase up WHERE up.product = :product", Long.class)
+                .setParameter("product", product)
                 .getSingleResult();
     }
 }

@@ -38,6 +38,8 @@ public class App {
     private static final int ADD_NEW_MANAGER_OPTION = 6;
     private static final int REMOVE_MANAGER_OPTION = 7;
     private static final int DEPOSIT_OPTION = 8;
+    private static final int VIEW_PROFIL_OPTION = 9;
+    private static final int VIEW_RATING_OPTION = 10;
 
     public static void run() {
         EntityManager em = Singleton.getConnection();
@@ -53,7 +55,8 @@ public class App {
                             "Добавить товар - 2\nПосмотреть зарегистрированных покупателей - 3" +
                             "\nКупить товар - 4\n" +
                             "Редактировать покупателя - 5\nДобавить менеджера - 6\n" +
-                            "\nПополнить баланс - 8\nВыберете пункт из списка: ");
+                            "Пополнить баланс - 8\nПосмотреть профиль - 9\n" +
+                            "Рейтинг продуктов - 10\n" + "Выберете пункт из списка: ");
 
                     int usr = sc.nextInt();
                     sc.nextLine();
@@ -101,6 +104,7 @@ public class App {
                             System.out.println("Вы уверены что хотите добавить менэджера? (1 - Да, 0 - Нет): ");
                             if (sc.nextInt() != 0) {
                                 userService.addNewManager(user);
+                                break;
                             }else {
                                 break;
                             }
@@ -109,6 +113,7 @@ public class App {
                             System.out.println("Вы уверены что хотите удалить менэджера? (1 - Да, 0 - Нет): ");
                             if (sc.nextInt() != 0) {
                                 userService.removeManager(user);
+                                break;
                             }else {
                                 break;
                             }
@@ -117,9 +122,18 @@ public class App {
                             System.out.println("Вы уверены что хотите пополнить баланс? (1 - Да, 0 - Нет): ");
                             if (sc.nextInt() != 0) {
                                 userService.balanceDeposit(user);
+                                break;
                             }else {
                                 break;
                             }
+
+                        case VIEW_PROFIL_OPTION:
+                            userService.viewProfil(user);
+                            break;
+
+                        case VIEW_RATING_OPTION:
+                            productService.viewAllProductsRating();
+                            break;
 
                         default:
                             System.out.println("\nВыбран некоректный пункт\n\n");

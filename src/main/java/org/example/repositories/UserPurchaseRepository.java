@@ -3,6 +3,7 @@ package org.example.repositories;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.Singleton;
+import org.example.models.Product;
 import org.example.models.UserPurchase;
 
 public class UserPurchaseRepository {

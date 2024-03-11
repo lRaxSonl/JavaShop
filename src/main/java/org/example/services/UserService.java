@@ -2,9 +2,10 @@ package org.example.services;
 
 
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.example.App;
+import org.example.models.Product;
 import org.example.models.User;
 import org.example.models.UserRole;
+import org.example.repositories.ProductRepository;
 import org.example.repositories.UserRepository;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Scanner;
  */
 public class UserService {
     private final UserRepository userRepository = new UserRepository();
+    private final ProductRepository productRepository = new ProductRepository();
     private final Scanner sc = new Scanner(System.in);
 
     public void addNewUser() {
@@ -158,6 +160,11 @@ public class UserService {
                 ", Баланс: " + user.getBalance());
 
         System.out.println("Купленные продукты: ");
+        List<Product> productList = userRepository.findProductsByUser(user);
+        for (Product product : productList) {
+            System.out.println("Name: " + product.getName() + ", Price: " + product.getPrice() + ", Рейтинг: " +
+                    productRepository.calculateRating(product) + "\n");
+        }
     }
 
     public void createAdmin() {
