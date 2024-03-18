@@ -167,6 +167,30 @@ public class UserService {
         }
     }
 
+    public void editProfil(User user) {
+        System.out.print("\nВведите новое имя пользователя: ");
+        String newUsername = sc.nextLine();
+
+        //Проверяем, существует ли пользователь с таким именем
+        if (isUsernameAlreadyExists(newUsername)) {
+            System.out.println("\nПользователь с таким именем уже существует.\n");
+            return;
+        }
+
+        //Устанавливаем новое имя пользователю
+        user.setUsername(newUsername);
+
+        //Запрашиваем и устанавливаем новый пароль
+        System.out.print("Введите новый пароль: ");
+        String newPassword = sc.nextLine();
+        user.setPassword(hashPassword(newPassword));
+
+        //Сохраняем обновленные данные в репозитории
+        userRepository.updateUser(user);
+
+        System.out.println("\nПрофиль успешно обновлен.\n");
+    }
+
     public void createAdmin() {
         if(!isUsernameAlreadyExists("Admin")) {
             userRepository.save(new User("Admin", hashPassword("pass"), UserRole.ADMINISTRATOR, 5000.0));

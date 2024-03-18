@@ -98,4 +98,24 @@ public class UserRepository {
                 .setParameter("user", user)
                 .getResultList();
     }
+
+    public void updateUser(User user) {
+        EntityTransaction transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            if (user != null) {
+                em.merge(user);
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
 }
