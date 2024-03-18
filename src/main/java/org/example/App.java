@@ -95,7 +95,7 @@ public class App {
 
 
                         case EDIT_CUSTOMER_OPTION:
-                            System.out.println("Вы уверены что хотите отредактировать покупалея? (1 - Да, 0 - Нет):");
+                            System.out.println("Вы уверены что хотите отредактировать свой профиль? (1 - Да, 0 - Нет):");
                             //Code here
                             break;
 
