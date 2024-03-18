@@ -9,7 +9,6 @@ import org.example.services.UserService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 /**
  * @author Nikita Ivkin
  * @since 07.03.2024
@@ -38,7 +37,7 @@ public class App {
     private static final int ADD_NEW_MANAGER_OPTION = 6;
     private static final int REMOVE_MANAGER_OPTION = 7;
     private static final int DEPOSIT_OPTION = 8;
-    private static final int VIEW_PROFIL_OPTION = 9;
+    private static final int VIEW_PROFILE_OPTION = 9;
     private static final int VIEW_RATING_OPTION = 10;
 
     public static void run() {
@@ -127,7 +126,7 @@ public class App {
                                 break;
                             }
 
-                        case VIEW_PROFIL_OPTION:
+                        case VIEW_PROFILE_OPTION:
                             userService.viewProfil(user);
                             break;
 
