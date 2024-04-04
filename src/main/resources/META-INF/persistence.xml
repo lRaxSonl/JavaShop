@@ -6,7 +6,6 @@
         <class>org.example.models.Category</class>
         <class>org.example.models.Product</class>
         <class>org.example.models.User</class>
-        <class>org.example.models.UserPurchase</class>
 
         <properties>
 
