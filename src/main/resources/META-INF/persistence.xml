@@ -3,10 +3,9 @@
     <persistence-unit name="javashop" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <class>org.example.models.Category</class>
-        <class>org.example.models.Product</class>
-        <class>org.example.models.User</class>
-        <class>org.example.models.UserPurchase</class>
+        <class>org.example.javashop.models.Product</class>
+        <class>org.example.javashop.models.User</class>
+        <class>org.example.javashop.models.UserPurchase</class>
 
         <properties>
 

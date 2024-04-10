@@ -1,10 +1,9 @@
-package org.example.repositories;
+package org.example.javashop.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.example.Singleton;
-import org.example.models.Product;
-import org.example.models.User;
+import org.example.javashop.Singleton;
+import org.example.javashop.models.Product;
 
 import java.util.List;
 

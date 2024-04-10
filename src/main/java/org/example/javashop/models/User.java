@@ -1,7 +1,6 @@
-package org.example.models;
+package org.example.javashop.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 

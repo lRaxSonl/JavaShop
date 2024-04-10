@@ -1,10 +1,10 @@
-package org.example.repositories;
+package org.example.javashop.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.example.Singleton;
-import org.example.models.Product;
-import org.example.models.UserPurchase;
+import org.example.javashop.Singleton;
+import org.example.javashop.models.UserPurchase;
+
 
 public class UserPurchaseRepository {
     private final static EntityManager em = Singleton.getConnection();

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="505.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javashop.Main">
+   <children>
+      <AnchorPane prefHeight="79.0" prefWidth="657.0" style="-fx-background-color: #2E3348;">
+         <children>
+            <Label layoutX="250.0" layoutY="13.0" prefHeight="54.0" prefWidth="157.0" text="JavaShop" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Forte" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="541.0" layoutY="13.0" prefHeight="27.0" prefWidth="96.0" text=" Username" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="79.0" prefHeight="426.0" prefWidth="157.0" style="-fx-background-color: #2E3348;" />
+   </children>
+</AnchorPane>

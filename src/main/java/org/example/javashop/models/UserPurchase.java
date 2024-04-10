@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;

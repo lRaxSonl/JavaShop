@@ -1,13 +1,14 @@
-package org.example.repositories;
+package org.example.javashop.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import org.example.Singleton;
-import org.example.models.Product;
-import org.example.models.User;
-import org.example.models.UserRole;
+import org.example.javashop.Singleton;
+import org.example.javashop.models.Product;
+import org.example.javashop.models.User;
+import org.example.javashop.models.UserRole;
 
 import java.util.List;
+
 
 /**
  * @author Nikita Ivkin
@@ -20,6 +21,7 @@ import java.util.List;
  * It uses the Singleton class to connect to the database.
  */
 public class UserRepository {
+
 
     private final static EntityManager em = Singleton.getConnection();
 

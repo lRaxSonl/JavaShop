@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.javashop.models;
 
 public enum UserRole {
     ADMINISTRATOR,

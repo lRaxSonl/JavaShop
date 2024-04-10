@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javashop.contollers.SingupController">
+    <children>
+        <AnchorPane layoutY="92.0" prefHeight="307.0" prefWidth="650.0" style="-fx-background-color: #FAFAFA;">
+            <children>
+                <TextField fx:id="reg_textField" layoutX="190.0" layoutY="89.0" prefHeight="25.0" prefWidth="269.0" promptText="Новое имя пользователя">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="reg_passwordField" layoutX="190.0" layoutY="138.0" prefHeight="25.0" prefWidth="269.0" promptText="Новый пароль">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </PasswordField>
+                <Label layoutX="222.0" layoutY="14.0" prefHeight="54.0" prefWidth="205.0" text="Регистрация" textAlignment="CENTER" textFill="#757575">
+                    <font>
+                        <Font name="System Bold Italic" size="30.0" />
+                    </font>
+                </Label>
+              <Button fx:id="reg_button" layoutX="215.0" layoutY="189.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" style="-fx-background-color: #ff8956;" text="Зарегистрироваться" textFill="WHITE">
+                  <font>
+                      <Font name="System Bold Italic" size="18.0" />
+                  </font>
+              </Button>
+            </children>
+        </AnchorPane>
+        <Label layoutX="246.0" layoutY="14.0" prefHeight="54.0" prefWidth="157.0" text="JavaShop" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Forte" size="36.0" />
+            </font>
+        </Label>
+          <Button fx:id="login_button_link" layoutX="554.0" layoutY="28.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #ff8956;" text="Войти" textFill="WHITE">
+              <font>
+                  <Font name="System Bold Italic" size="12.0" />
+              </font>
+          </Button>
+    </children>
+</AnchorPane>
