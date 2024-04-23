@@ -3,9 +3,8 @@ package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @Data
 @Entity
 @Table(name = "products")
@@ -27,5 +26,8 @@ public class Product {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+    public Product() {
+
     }
 }

@@ -10,4 +10,5 @@ module org.example.javashop {
     exports org.example.javashop;
     exports org.example.javashop.contollers;
     opens org.example.javashop.contollers to javafx.fxml;
+    exports org.example.javashop.models to eclipselink;
 }

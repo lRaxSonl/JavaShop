@@ -2,10 +2,8 @@ package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "user_purchases")
@@ -25,5 +23,9 @@ public class UserPurchase {
     public UserPurchase(User user, Product product) {
         this.user = user;
         this.product = product;
+    }
+
+    public UserPurchase() {
+
     }
 }

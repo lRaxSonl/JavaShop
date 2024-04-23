@@ -2,10 +2,8 @@ package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 
-@RequiredArgsConstructor
 @Data
 @Entity
 @Table(name = "users")
@@ -31,6 +29,10 @@ public class User {
         this.password = password;
         this.role = role;
         this.balance = balance;
+    }
+
+    public User() {
+
     }
 
 }
