@@ -1,6 +1,7 @@
 package org.example.javashop.services;
 
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.example.javashop.contollers.UIHandler;
 import org.example.javashop.models.User;
 import org.example.javashop.models.UserRole;
 import org.example.javashop.repositories.ProductRepository;
@@ -11,6 +12,25 @@ import java.util.List;
 public class UserService {
     private final static UserRepository userRepository = new UserRepository();
     private final static ProductRepository productRepository = new ProductRepository();
+    private final static UIHandler uiHandler = new UIHandler();
+
+
+    public User userLogin(String username, String password) {
+        if(isUsernameAlreadyExists(username)) {
+            User user = userRepository.findByUsername(username);
+
+            if(isCorrectPassword(password, user.getPassword())) {
+                return user;
+            }else {
+                uiHandler.showAlert("Information", "Неправильные данные.",  "Данные пользователя введены не верно.");
+            }
+
+        }else {
+            uiHandler.showAlert("Information", "Неправильные данные.",  "Данные пользователя введены не верно.");
+            return null;
+        }
+        return null;
+    }
 
     public void addNewUser() {
         boolean createUsername = true;

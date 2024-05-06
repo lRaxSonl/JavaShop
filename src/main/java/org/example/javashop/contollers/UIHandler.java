@@ -3,6 +3,7 @@ package org.example.javashop.contollers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -32,5 +33,15 @@ public class UIHandler {
             stage.setScene(new Scene(root));
             stage.showAndWait();
         });
+    }
+
+    public void showAlert(String title, String header, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(text);
+
+        alert.showAndWait();
     }
 }
