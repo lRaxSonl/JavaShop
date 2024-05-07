@@ -35,12 +35,11 @@ public class UIHandler {
         });
     }
 
-    public void showAlert(String title, String header, String text) {
+    public void showAlert(String title, String text) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(text);
+        alert.setHeaderText(text);
 
         alert.showAndWait();
     }

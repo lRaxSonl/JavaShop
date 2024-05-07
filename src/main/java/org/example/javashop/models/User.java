@@ -2,15 +2,18 @@ package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -30,11 +33,6 @@ public class User {
         this.role = role;
         this.balance = balance;
     }
-
-    public User() {
-
-    }
-
 }
 
 

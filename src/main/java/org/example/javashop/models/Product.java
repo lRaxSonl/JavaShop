@@ -3,15 +3,17 @@ package org.example.javashop.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,8 +28,5 @@ public class Product {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-    }
-    public Product() {
-
     }
 }

@@ -16,20 +16,19 @@ public class UserService {
 
 
     public User userLogin(String username, String password) {
-        if(isUsernameAlreadyExists(username)) {
-            User user = userRepository.findByUsername(username);
-
-            if(isCorrectPassword(password, user.getPassword())) {
-                return user;
-            }else {
-                uiHandler.showAlert("Information", "Неправильные данные.",  "Данные пользователя введены не верно.");
-            }
-
+        User user;
+        if (isUsernameAlreadyExists(username)) {
+            user = userRepository.findByUsername(username);
         }else {
-            uiHandler.showAlert("Information", "Неправильные данные.",  "Данные пользователя введены не верно.");
+            uiHandler.showAlert("Information", "Данные введены не верно.");
             return null;
         }
-        return null;
+
+        if(!isCorrectPassword(password, user.getPassword())) {
+            uiHandler.showAlert("Information", "Данные введены не верно.");
+            return null;
+        }
+        return user;
     }
 
     public void addNewUser() {
