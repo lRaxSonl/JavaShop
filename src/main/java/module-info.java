@@ -8,7 +8,8 @@ module org.example.javashop {
 
     opens org.example.javashop to javafx.fxml;
     exports org.example.javashop;
-    exports org.example.javashop.contollers;
-    opens org.example.javashop.contollers to javafx.fxml;
+    exports org.example.javashop.controllers;
+    opens org.example.javashop.controllers to javafx.fxml;
     exports org.example.javashop.models to eclipselink;
+    opens org.example.javashop.models to eclipselink;
 }

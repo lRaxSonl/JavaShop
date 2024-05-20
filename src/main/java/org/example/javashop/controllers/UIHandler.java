@@ -1,4 +1,4 @@
-package org.example.javashop.contollers;
+package org.example.javashop.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

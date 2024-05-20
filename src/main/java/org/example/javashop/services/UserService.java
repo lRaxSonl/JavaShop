@@ -1,7 +1,7 @@
 package org.example.javashop.services;
 
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.example.javashop.contollers.UIHandler;
+import org.example.javashop.controllers.UIHandler;
 import org.example.javashop.models.User;
 import org.example.javashop.models.UserRole;
 import org.example.javashop.repositories.ProductRepository;
@@ -31,15 +31,18 @@ public class UserService {
         return user;
     }
 
-    public void addNewUser() {
-        boolean createUsername = true;
-        String usernameInput = "1";
+    //Added new user
+    public void addNewUser(String username, String password) {
 
-        if (isUsernameAlreadyExists(usernameInput)) {
-            System.out.println("\nТакое имя пользователя уже существует\n");
+        if (isUsernameAlreadyExists(username)) {
+            uiHandler.showAlert("Someting wrong!", "Username is already exists!");
+        }else {
+            userRepository.save(new User(username, hashPassword(password), UserRole.USER, 0.0));
+            uiHandler.showAlert("Success!", "Now you neew to login");
         }
     }
 
+    //Create admin
     public void createAdmin() {
         if(!isUsernameAlreadyExists("Admin")) {
             userRepository.save(new User("Admin", hashPassword("pass"), UserRole.ADMINISTRATOR, 5000.0));

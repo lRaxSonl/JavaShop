@@ -1,4 +1,4 @@
-package org.example.javashop.contollers;
+package org.example.javashop.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +12,7 @@ import org.example.javashop.services.UserService;
 public class LoginController {
     private static final UIHandler uiHandler = new UIHandler();
     private static final UserService userService = new UserService();
+    static User user;
 
     @FXML
     private ResourceBundle resources;
@@ -37,10 +38,22 @@ public class LoginController {
             String username = login_textFieldForUsername.getText().trim();
             String password = login_passwordFieldForPassword.getText().trim();
 
-            User user = userService.userLogin(username, password);
+            user = userService.userLogin(username, password);
+
+            try {
+                if(!user.equals(null)) {
+                    uiHandler.changeWindow(login_button, "/org/example/javashop/main.fxml");
+                }
+            }catch (NullPointerException e) {
+                System.out.println("Fields is null");
+            }
         });
 
 
         uiHandler.changeWindow(reg_button_link, "/org/example/javashop/singup.fxml");
+    }
+
+    public static User getUser() {
+        return user;
     }
 }
