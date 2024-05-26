@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -23,21 +25,90 @@
       </AnchorPane>
       <AnchorPane layoutY="78.0" prefHeight="427.0" prefWidth="139.0" style="-fx-background-color: #2E3348;">
          <children>
-            <Button fx:id="profile_L" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #2E3348;" text="Профиль" textFill="WHITE">
+            <Button fx:id="profile_B" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #2E3348;" text="Профиль" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="products_L" layoutX="20.0" layoutY="56.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #2E3348;" text="Товары" textFill="WHITE">
+            <Button fx:id="products_B" layoutX="20.0" layoutY="56.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #2E3348;" text="Товары" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="admin_panel_L" layoutX="-1.0" layoutY="193.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="157.0" style="-fx-background-color: #2E3348;" text="Админ панель" textFill="WHITE">
+            <Button fx:id="admin_panel_B" layoutX="-1.0" layoutY="193.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="157.0" style="-fx-background-color: #2E3348;" text="Админ панель" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchor_main_profile" layoutX="156.0" layoutY="78.0" prefHeight="427.0" prefWidth="501.0" visible="false">
+         <children>
+            <Label fx:id="username_main" alignment="CENTER" layoutX="68.0" layoutY="23.0" prefHeight="42.0" prefWidth="328.0" style="-fx-background-color: #2E3348;" text="Username" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="role_main" alignment="CENTER" layoutX="14.0" layoutY="96.0" prefHeight="42.0" prefWidth="191.0" style="-fx-background-color: #2E3348;" text="Роль: User" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="balance_main" alignment="CENTER" layoutX="279.0" layoutY="96.0" prefHeight="42.0" prefWidth="191.0" style="-fx-background-color: #2E3348;" text="Баланс: 5000" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="user_product_list" alignment="CENTER" layoutX="82.0" layoutY="245.0" prefHeight="42.0" prefWidth="300.0" style="-fx-background-color: #2E3348;" text="Список купленных продуктов:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="deposit_main_TF" layoutX="154.0" layoutY="163.0" prefHeight="25.0" prefWidth="156.0" promptText="Введите сумму" />
+            <Button fx:id="enter_deposit_B" accessibleRole="BUTTON" alignment="CENTER" layoutX="145.0" layoutY="196.0" prefHeight="36.0" prefWidth="175.0" style="-fx-background-color: #ff8956;" text="Внести депозит" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchor_products_main" layoutX="156.0" layoutY="78.0" prefHeight="427.0" prefWidth="501.0" visible="false">
+         <children>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="42.0" prefWidth="184.0" style="-fx-background-color: #2E3348;" text="Список продуктов:" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="pr_listView" layoutX="216.0" layoutY="14.0" prefHeight="113.0" prefWidth="242.0" />
+            <AnchorPane fx:id="pr_options_panel" layoutX="24.0" layoutY="152.0" prefHeight="211.0" prefWidth="445.0" visible="false">
+               <children>
+                  <Label fx:id="pa_product_name" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="42.0" prefWidth="184.0" style="-fx-background-color: #2E3348;" text="product name" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="pa_product_rating" alignment="CENTER" layoutX="299.0" layoutY="64.0" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: #2E3348;" text="product rating" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="pa_product_price" alignment="CENTER" layoutX="7.0" layoutY="64.0" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: #2E3348;" text="product price" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="pa_buy_product" layoutX="165.0" layoutY="146.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="115.0" style="-fx-background-color: #ff8956;" text="Купить" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="pa_product_quantity" alignment="CENTER" layoutX="160.0" layoutY="64.0" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #2E3348;" text="Кол-во:" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

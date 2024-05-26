@@ -1,5 +1,7 @@
 package org.example.javashop.services;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.example.javashop.controllers.UIHandler;
 import org.example.javashop.models.User;
@@ -14,6 +16,11 @@ public class UserService {
     private final static ProductRepository productRepository = new ProductRepository();
     private final static UIHandler uiHandler = new UIHandler();
 
+
+    public void addBalance(User user, Double deposit) {
+        Double newBalance = user.getBalance() + deposit;
+        userRepository.updateUserBalance(user, newBalance);
+    }
 
     public User userLogin(String username, String password) {
         User user;
