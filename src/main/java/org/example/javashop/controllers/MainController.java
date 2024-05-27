@@ -16,6 +16,8 @@ import org.example.javashop.repositories.ProductRepository;
 import org.example.javashop.services.ProductService;
 import org.example.javashop.services.UserService;
 
+
+
 public class MainController {
     private static final UIHandler uiHandler = new UIHandler();
     private static final UserService userService = new UserService();
@@ -235,6 +237,42 @@ public class MainController {
             String product_quantity = product_quantity_TF.getText().trim();
 
             productService.addNewProduct(new Product(product_name, Double.parseDouble(product_price), Integer.parseInt(product_quantity)));
+        });
+
+        //Кнопка добавления менеджера
+        add_manager_B.setOnAction(event -> {
+            String selectedUsername = user_list.getSelectionModel().getSelectedItem();
+            if (selectedUsername != null) {
+                User selectedUser = userService.findByUsername(selectedUsername);
+                if (selectedUser != null) {
+                    userService.addManager(selectedUser);
+                    uiHandler.showAlert("Успешно", "Пользователь " + selectedUsername + " был назначен менеджером.");
+                    updateManagersList();
+                    updateUsersList();
+                } else {
+                    uiHandler.showAlert("Ошибка", "Пользователь не найден.");
+                }
+            } else {
+                uiHandler.showAlert("Ошибка", "Выберите пользователя из списка.");
+            }
+        });
+
+        //Кнопка удаления менеджера
+        delete_manager_B.setOnAction(event -> {
+            String selectedManager = manager_list.getSelectionModel().getSelectedItem();
+            if (selectedManager != null) {
+                User selectedUser = userService.findByUsername(selectedManager);
+                if (selectedUser != null) {
+                    userService.removeManager(selectedUser);
+                    uiHandler.showAlert("Успешно", "Менеджер " + selectedManager + " был удален.");
+                    updateManagersList();
+                    updateUsersList();
+                } else {
+                    uiHandler.showAlert("Ошибка", "Менеджер не найден.");
+                }
+            } else {
+                uiHandler.showAlert("Ошибка", "Выберите менеджера из списка.");
+            }
         });
     }
 

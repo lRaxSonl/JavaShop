@@ -28,12 +28,12 @@ public class UserService {
         if (isUsernameAlreadyExists(username)) {
             user = userRepository.findByUsername(username);
         }else {
-            uiHandler.showAlert("Information", "Данные введены не верно.");
+            uiHandler.showAlert("Ошибка", "Данные введены не верно.");
             return null;
         }
 
         if(!isCorrectPassword(password, user.getPassword())) {
-            uiHandler.showAlert("Information", "Данные введены не верно.");
+            uiHandler.showAlert("Ошибка", "Данные введены не верно.");
             return null;
         }
         return user;
@@ -43,11 +43,23 @@ public class UserService {
     public void addNewUser(String username, String password) {
 
         if (isUsernameAlreadyExists(username)) {
-            uiHandler.showAlert("Someting wrong!", "Username is already exists!");
+            uiHandler.showAlert("Ошибка", "Такое имя пользователя уже существует");
         }else {
             userRepository.save(new User(username, hashPassword(password), UserRole.USER, 0.0));
-            uiHandler.showAlert("Success!", "Now you neew to login");
+            uiHandler.showAlert("Успех!", "Теперь вам нужно войти в аккаунт");
         }
+    }
+
+    public void addManager(User user) {
+        userRepository.updateUserRole(user, UserRole.MANAGER);
+    }
+
+    public void removeManager(User user) {
+        userRepository.updateUserRole(user, UserRole.USER);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     //Create admin
