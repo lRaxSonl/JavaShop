@@ -3,7 +3,10 @@ package org.example.javashop.repositories;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import org.example.javashop.Singleton;
+import org.example.javashop.models.User;
 import org.example.javashop.models.UserPurchase;
+
+import java.util.List;
 
 
 public class UserPurchaseRepository {
@@ -26,5 +29,11 @@ public class UserPurchaseRepository {
             }
             e.printStackTrace();
         }
+    }
+
+    public List<UserPurchase> findByUser(User user) {
+        return em.createQuery("SELECT up FROM UserPurchase up WHERE up.user = :user", UserPurchase.class)
+                .setParameter("user", user)
+                .getResultList();
     }
 }

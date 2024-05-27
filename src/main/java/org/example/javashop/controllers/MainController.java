@@ -85,6 +85,13 @@ public class MainController {
 
     @FXML
     private Label username_main;
+
+    @FXML
+    private ListView<String> showProducts_main;
+
+
+    private static Product currentProduct;
+
     @FXML
     void initialize() {
 
@@ -100,6 +107,7 @@ public class MainController {
             username_main.setText(user.getUsername());
             role_main.setText("Роль: " + user.getRole());
             balance_main.setText("Баланс: " + user.getBalance());
+            updatePurchasedProductsList(user);
         });
 
         //Кнопка пополнения баланса
@@ -133,10 +141,10 @@ public class MainController {
             }
         });
 
-        // Обработка выбора продукта из списка
+        //Обработка выбора продукта из списка
         pr_listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Product currentProduct = productRepository.findByName(newValue);
+                currentProduct = productRepository.findByName(newValue);
                 if (currentProduct != null) {
                     pr_options_panel.setVisible(true);
 
@@ -148,5 +156,37 @@ public class MainController {
             }
         });
 
+        //Кнопка покупки продукта
+        pa_buy_product.setOnAction(event -> {
+            if (currentProduct != null) {
+                boolean purchaseSuccessful = productService.purchaseProduct(user, currentProduct);
+                if (purchaseSuccessful) {
+                    uiHandler.showAlert("Успешно", "Покупка выполнена успешно.");
+                    balance_main.setText("Баланс: " + user.getBalance());
+                    pa_product_quantity.setText("Кол-во: " + currentProduct.getQuantity());
+                    pa_product_rating.setText("Рейтинг: " + productRepository.calculateRating(currentProduct));
+                } else {
+                    uiHandler.showAlert("Ошибка", "Покупка не удалась. Недостаточно средств или товара.");
+                }
+            } else {
+                System.out.println(false);
+            }
+        });
+
+
+        admin_panel_B.setOnAction(event -> {
+            
+        });
+    }
+
+
+    private void updatePurchasedProductsList(User user) {
+        List<String> purchasedProductNames = productService.getPurchasedProductNames(user);
+        if(showProducts_main != null) {
+            showProducts_main.getItems().clear();
+            showProducts_main.getItems().addAll(purchasedProductNames);
+        }else {
+            showProducts_main.getItems().addAll(purchasedProductNames);
+        }
     }
 }

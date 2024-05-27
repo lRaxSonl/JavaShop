@@ -1,9 +1,9 @@
 package org.example.javashop.services;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
+
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.example.javashop.controllers.UIHandler;
+import org.example.javashop.models.Product;
 import org.example.javashop.models.User;
 import org.example.javashop.models.UserRole;
 import org.example.javashop.repositories.ProductRepository;
@@ -92,6 +92,11 @@ public class UserService {
         }else {
             return false;
         }
+    }
+
+    public void deductBalance(User user, Double productPrice) {
+        Double newBalance = user.getBalance() - productPrice;
+        userRepository.updateUserBalance(user, newBalance);
     }
 
 }
