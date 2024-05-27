@@ -30,7 +30,25 @@ public class MainController {
     private URL location;
 
     @FXML
+    private ListView<String> manager_list;
+
+    @FXML
+    private ListView<String> user_list;
+
+    @FXML
+    private Button add_manager_B;
+
+    @FXML
+    private Button add_product_B;
+
+    @FXML
     private Button admin_panel_B;
+
+    @FXML
+    private AnchorPane anchor_admin_panel;
+
+    @FXML
+    private AnchorPane anchor_admin_panel_2;
 
     @FXML
     private AnchorPane anchor_main_profile;
@@ -40,6 +58,9 @@ public class MainController {
 
     @FXML
     private Label balance_main;
+
+    @FXML
+    private Button delete_manager_B;
 
     @FXML
     private TextField deposit_main_TF;
@@ -57,16 +78,25 @@ public class MainController {
     private Label pa_product_price;
 
     @FXML
-    private Label pa_product_rating;
+    private Label pa_product_quantity;
 
     @FXML
-    private Label pa_product_quantity;
+    private Label pa_product_rating;
 
     @FXML
     private ListView<String> pr_listView;
 
     @FXML
     private AnchorPane pr_options_panel;
+
+    @FXML
+    private TextField product_name_TF;
+
+    @FXML
+    private TextField product_price_TF;
+
+    @FXML
+    private TextField product_quantity_TF;
 
     @FXML
     private Button products_B;
@@ -78,6 +108,9 @@ public class MainController {
     private Label role_main;
 
     @FXML
+    private ListView<String> showProducts_main;
+
+    @FXML
     private Label user_product_list;
 
     @FXML
@@ -86,11 +119,9 @@ public class MainController {
     @FXML
     private Label username_main;
 
-    @FXML
-    private ListView<String> showProducts_main;
-
 
     private static Product currentProduct;
+    private static User currentUser, currentManager;
 
     @FXML
     void initialize() {
@@ -102,6 +133,8 @@ public class MainController {
         //Кнопка переключения на профиль
         profile_B.setOnAction(event -> {
             anchor_products_main.setVisible(false);
+            anchor_admin_panel.setVisible(false);
+            anchor_admin_panel_2.setVisible(false);
             anchor_main_profile.setVisible(true);
 
             username_main.setText(user.getUsername());
@@ -128,6 +161,8 @@ public class MainController {
         //Кнопка переключения на список продуктов
         products_B.setOnAction(event -> {
             anchor_main_profile.setVisible(false);
+            anchor_admin_panel.setVisible(false);
+            anchor_admin_panel_2.setVisible(false);
             anchor_products_main.setVisible(true);
 
             List<String> product_names = productService.getAllProductNames();
@@ -174,8 +209,32 @@ public class MainController {
         });
 
 
+        //Кнопка переключения на админ панель
         admin_panel_B.setOnAction(event -> {
-            
+            if(userService.isManager(user) || userService.isAdmin(user)){
+                anchor_main_profile.setVisible(false);
+                anchor_products_main.setVisible(false);
+                anchor_admin_panel.setVisible(true);
+
+                if(userService.isAdmin(user)) {
+                    anchor_admin_panel_2.setVisible(true);
+
+                    updateManagersList();
+                    updateUsersList();
+                }
+
+            }else {
+                uiHandler.showAlert("В доступе отказано.", "У вас нет прав на использования этой вкладки.");
+            }
+        });
+
+        //Кнопка добавления продукта
+        add_product_B.setOnAction(event -> {
+            String product_name = product_name_TF.getText().trim();
+            String product_price = product_price_TF.getText().trim();
+            String product_quantity = product_quantity_TF.getText().trim();
+
+            productService.addNewProduct(new Product(product_name, Double.parseDouble(product_price), Integer.parseInt(product_quantity)));
         });
     }
 
@@ -188,5 +247,27 @@ public class MainController {
         }else {
             showProducts_main.getItems().addAll(purchasedProductNames);
         }
+    }
+
+    private void updateManagersList(){
+        List<String> managers = new ArrayList<>();
+
+        for(User user : userService.getAllManagers()) {
+            managers.add(user.getUsername());
+        }
+
+        manager_list.getItems().clear();
+        manager_list.getItems().addAll(managers);
+    }
+
+    private void updateUsersList(){
+        List<String> usernames = new ArrayList<>();
+
+        for(User user : userService.getAllUsers()) {
+            usernames.add(user.getUsername());
+        }
+
+        user_list.getItems().clear();
+        user_list.getItems().addAll(usernames);
     }
 }

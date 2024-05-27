@@ -9,6 +9,7 @@ import org.example.javashop.models.UserRole;
 import org.example.javashop.repositories.ProductRepository;
 import org.example.javashop.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -92,6 +93,42 @@ public class UserService {
         }else {
             return false;
         }
+    }
+
+    public List<User> getAllManagers() {
+        List<User> users = userRepository.findAll();
+        List<User> managers = new ArrayList<>();
+
+        for(User user : users) {
+            if(user.getRole().equals(UserRole.MANAGER)) {
+                managers.add(user);
+            }
+        }
+        return managers;
+    }
+
+    public List<User> getAllAdmins() {
+        List<User> users = userRepository.findAll();
+        List<User> admins = new ArrayList<>();
+
+        for(User user : users) {
+            if(user.getRole().equals(UserRole.ADMINISTRATOR)) {
+                admins.add(user);
+            }
+        }
+        return admins;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<User> users_role = new ArrayList<>();
+
+        for(User user : users) {
+            if(user.getRole().equals(UserRole.USER)) {
+                users_role.add(user);
+            }
+        }
+        return users_role;
     }
 
     public void deductBalance(User user, Double productPrice) {

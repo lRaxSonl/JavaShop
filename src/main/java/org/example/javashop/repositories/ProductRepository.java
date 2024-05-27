@@ -2,6 +2,8 @@ package org.example.javashop.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import org.example.javashop.Singleton;
 import org.example.javashop.models.Product;
 
@@ -33,9 +35,13 @@ public class ProductRepository {
     }
 
     public Product findByName(String name) {
-        return em.createQuery("SELECT p FROM Product p WHERE p.name = :name", Product.class)
-                .setParameter("name", name)
-                .getSingleResult();
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p WHERE p.name = :name", Product.class)
+                .setParameter("name", name);
+        try {
+            return query.getSingleResult();
+        }catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void updateProductQuantity(Product product, int quantity) {

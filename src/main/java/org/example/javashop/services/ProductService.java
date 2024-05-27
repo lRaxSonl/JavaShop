@@ -1,5 +1,6 @@
 package org.example.javashop.services;
 
+import org.example.javashop.controllers.UIHandler;
 import org.example.javashop.models.Product;
 import org.example.javashop.models.User;
 import org.example.javashop.models.UserPurchase;
@@ -15,6 +16,7 @@ public class ProductService {
     private static final ProductRepository productRepository = new ProductRepository();
     private static final UserService userService = new UserService();
     private static final UserPurchaseRepository userPurchaseRepository = new UserPurchaseRepository();
+    private static final UIHandler uiHandler = new UIHandler();
 
     public List<String> getAllProductNames() {
         List<Product> allProducts = productRepository.findAll();
@@ -47,5 +49,22 @@ public class ProductService {
             productNames.add(purchase.getProduct().getName());
         }
         return productNames;
+    }
+
+    public boolean isProductAlreadyExists(String product_name) {
+        Product product = productRepository.findByName(product_name);
+        return product != null;
+    }
+
+    public void addNewProduct(Product product) {
+        if(product.getName() != null || product.getPrice() != null || String.valueOf(product.getQuantity()) != null) {
+            if(!isProductAlreadyExists(product.getName())) {
+                productRepository.save(product);
+            }else {
+                uiHandler.showAlert("Невозможно добавить продукт.", "Продукт с таким именем уже существует.");
+            }
+        } else{
+            uiHandler.showAlert("Ошибка.", "Неправильный формат ввода, заполните все поля.");
+        }
     }
 }
