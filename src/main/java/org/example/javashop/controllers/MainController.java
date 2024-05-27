@@ -249,7 +249,7 @@ public class MainController {
         }
     }
 
-    private void updateManagersList(){
+    private void updateManagersList() {
         List<String> managers = new ArrayList<>();
 
         for(User user : userService.getAllManagers()) {
@@ -260,7 +260,7 @@ public class MainController {
         manager_list.getItems().addAll(managers);
     }
 
-    private void updateUsersList(){
+    private void updateUsersList() {
         List<String> usernames = new ArrayList<>();
 
         for(User user : userService.getAllUsers()) {
