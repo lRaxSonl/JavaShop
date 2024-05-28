@@ -180,9 +180,9 @@ public class MainController {
 
         //Обработка выбора продукта из списка
         pr_listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+            if(newValue != null) {
                 currentProduct = productRepository.findByName(newValue);
-                if (currentProduct != null) {
+                if(currentProduct != null) {
                     pr_options_panel.setVisible(true);
 
                     pa_product_name.setText(currentProduct.getName());
@@ -195,17 +195,17 @@ public class MainController {
 
         //Кнопка покупки продукта
         pa_buy_product.setOnAction(event -> {
-            if (currentProduct != null) {
+            if(currentProduct != null) {
                 boolean purchaseSuccessful = productService.purchaseProduct(user, currentProduct);
                 if (purchaseSuccessful) {
                     uiHandler.showAlert("Успешно", "Покупка выполнена успешно.");
                     balance_main.setText("Баланс: " + user.getBalance());
                     pa_product_quantity.setText("Кол-во: " + currentProduct.getQuantity());
                     pa_product_rating.setText("Рейтинг: " + productRepository.calculateRating(currentProduct));
-                } else {
+                }else {
                     uiHandler.showAlert("Ошибка", "Покупка не удалась. Недостаточно средств или товара.");
                 }
-            } else {
+            }else {
                 System.out.println(false);
             }
         });
@@ -236,7 +236,11 @@ public class MainController {
             String product_price = product_price_TF.getText().trim();
             String product_quantity = product_quantity_TF.getText().trim();
 
-            productService.addNewProduct(new Product(product_name, Double.parseDouble(product_price), Integer.parseInt(product_quantity)));
+            try {
+                productService.addNewProduct(new Product(product_name, Double.parseDouble(product_price), Integer.parseInt(product_quantity)));
+            }catch (NumberFormatException e) {
+                uiHandler.showAlert("Ошибка.", "Неправильный формат ввода.");
+            }
         });
 
         //Кнопка добавления менеджера

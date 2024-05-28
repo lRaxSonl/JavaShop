@@ -30,14 +30,17 @@ public class ProductService {
 
     public boolean purchaseProduct(User user, Product product) {
         if (user.getBalance() >= product.getPrice() && product.getQuantity() > 0) {
-            userService.deductBalance(user, product.getPrice());
-            product.setQuantity(product.getQuantity() - 1);
-            productRepository.save(product);
+            try {
+                userService.deductBalance(user, product.getPrice());
+                product.setQuantity(product.getQuantity() - 1);
+                productRepository.save(product);
 
-            UserPurchase userPurchase = new UserPurchase(user, product);
-            userPurchaseRepository.save(userPurchase);
-
-            return true;
+                UserPurchase userPurchase = new UserPurchase(user, product);
+                userPurchaseRepository.save(userPurchase);
+                return true;
+            }catch (NumberFormatException e) {
+                uiHandler.showAlert("Ошибка.", "Неправильный формат ввода.");
+            }
         }
         return false;
     }
